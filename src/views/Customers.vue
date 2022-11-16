@@ -14,7 +14,7 @@
                             {{ cwallet.wallet.title }}
                         </div>
                         <div class="com-sm-3">
-                            <button class="btn-block btn-outline primary" @click="editBalances(cwallet.wallet_id, cwallet.customer_id, $refs[`nbalance${cwallet.id}`].value)">
+                            <button class="btn-block btn-outline primary" @click="editBalances(cwallet.wallet_id, cwallet.customer_id, $refs[`nbalance${cwallet.id}`][0].value)">
                                 ویرایش
                             </button>
                         </div>
@@ -111,6 +111,7 @@ export default {
 
         editBalances: function (wallet_id, customer_id, nbalance) {
             const form = new FormData();
+            console.log(nbalance);
             form.append('balance', nbalance);
             form.append('customer_id', customer_id);
             form.append('wallet_id', wallet_id);

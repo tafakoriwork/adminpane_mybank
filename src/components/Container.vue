@@ -19,24 +19,21 @@
           پذیرندگان
         </router-link>
       </li>
-      <li>
-        <!-- params: { username: 'erina' }  -->
+       <li>
         <router-link :to="{ name: 'wallets' }">
           کیف پول
         </router-link>
       </li>
-      <li>
-        <!-- params: { username: 'erina' }  -->
+    <!--  <li>
         <router-link :to="{ name: 'customers' }">
           مشتریان
         </router-link>
       </li>
       <li>
-        <!-- params: { username: 'erina' }  -->
         <router-link :to="{ name: 'products' }">
           محصولات
         </router-link>
-      </li>
+      </li> -->
     </ul>
   </nav>
 
