@@ -1,22 +1,26 @@
 <template>
     <Container msg="Welcome to Your Vue.js App">
         <template v-slot:main>
-            <div class="card" v-if="currentuser">
-                <div class="card-header">ویرایش اعتبار کیف پول</div>
-                <div class="card-body">
-                    <div class="row mx-0 justify-content-center" v-for="cwallet, i in currentuser.customerwallet"
-                        :key="i">
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" :ref="`nbalance${cwallet.id}`"
-                                :value="cwallet.balance">
-                        </div>
-                        <div class="col-sm-3">
-                            {{ cwallet.wallet.title }}
-                        </div>
-                        <div class="com-sm-3">
-                            <button class="btn-block btn-outline primary" @click="editBalances(cwallet.wallet_id, cwallet.customer_id, $refs[`nbalance${cwallet.id}`][0].value)">
-                                ویرایش
-                            </button>
+            <div class="popup" v-if="currentuser" @click.self="currentuser= null">
+                <div class="card col-sm-4">
+                    <div class="card-header">ویرایش اعتبار کیف پول</div>
+                    <div class="card-body">
+                        <div class="row mx-0 justify-content-center my-2" v-for="wallet, i in wallets" :key="i">
+                            <div class="col-sm-8 row mx-0">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-block btn-outline-primary"
+                                        @click="editBalances(wallet.id, currentuser.id , $refs[`nbalance${wallet.id}`][0].value)">
+                                        ویرایش
+                                    </button>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" :ref="`nbalance${wallet.id}`">
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                {{ wallet.title }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,6 +75,7 @@ export default {
     components: { Container },
     data() {
         return {
+            wallets: [],
             users: [],
             title: null,
             currentuser: null,
@@ -78,18 +83,8 @@ export default {
     },
     mounted() {
         this.getWallets()
+        this.getWalletsMain()
     },
-
-
-
-
-
-
-
-
-
-
-
 
 
     methods: {
@@ -98,8 +93,14 @@ export default {
                 .then(response => response.data)
                 .then(result => {
                     this.users = result.users;
+                })
+        },
 
-                    console.log(result.users[0]);
+        getWalletsMain: function () {
+            axios.get('http://188.121.120.190:8400/v1/wallet')
+                .then(response => response.data)
+                .then(result => {
+                    this.wallets = result.wallets;
                 })
         },
 
@@ -115,17 +116,17 @@ export default {
             form.append('balance', nbalance);
             form.append('customer_id', customer_id);
             form.append('wallet_id', wallet_id);
-            axios.post('http://188.121.120.190:8400/v1/customer/wallet/make',form, {
+            axios.post('http://188.121.120.190:8400/v1/customer/wallet/make', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
                 .then(response => response.data)
                 .then(result => {
-                    if(result)
-                    alert('با موفقیت ویرایش شد')
+                    if (result)
+                        alert('با موفقیت ویرایش شد')
                 })
-         
+
         },
 
         makeWallet: function () {
@@ -157,5 +158,15 @@ export default {
 </script>
 
 <style scoped>
-
+.popup {
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: #aaa7;
+    left: 0;
+    top: 0;
+}
 </style>

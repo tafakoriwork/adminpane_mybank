@@ -24,7 +24,7 @@
           کیف پول
         </router-link>
       </li>
-    <!--  <li>
+      <li>
         <router-link :to="{ name: 'customers' }">
           مشتریان
         </router-link>
@@ -33,7 +33,7 @@
         <router-link :to="{ name: 'products' }">
           محصولات
         </router-link>
-      </li> -->
+      </li>
     </ul>
   </nav>
 

@@ -88,14 +88,9 @@ export default {
 
     methods: {
         getSuppliers: function () {
-            axios.get('http://188.121.120.190:8400/v1/supplier',{
-                params: {
-                    type: 0
-                }
-            })
+            axios.get('http://188.121.120.190:8400/v1/supplier/index2')
                 .then(response => response.data)
                 .then(result => {
-                    console.log(result);
                     this.suppliers = result.suppliers;
                 })
         },
